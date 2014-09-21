@@ -1,6 +1,19 @@
 transducer experiments in c++
 =============================
 
+Transducers ignore the represenation of a sequence and instead build algorithm composition around the operations performed on each value.
+The core pattern is based on std::accumulate. std::transform, std::copy_if and many others can be implemented in terms of std::accumulate.
+```C++
+template<class InputIterator, class OutputIterator, class UnaryFunction>
+OutputIterator acc_transform(
+  InputIterator first1,
+  InputIterator last1,
+  OutputIterator result,
+  UnaryFunction func){
+    return std::accumulate(first1, last1, result, [=](auto result, auto v){*result = func(v); return ++result;});
+}
+```
+
 References:
 - Rich Hickey @ StrangeLoop [YouTube](https://www.youtube.com/watch?v=6mTbuzafcII)
 - Rich Hickey [Blog](http://blog.cognitect.com/blog/2014/8/6/transducers-are-coming)
@@ -8,13 +21,13 @@ References:
 
 Status
 ======
-uses C++14 features.
-implemented transduce, into and compose
-filterer, mapper, summer and println
-the transducers are implementing two arities, next and complete. the arities are implemented with overloading.
+- uses C++14 features.
+- implemented transduce, into and compose
+- filterer, mapper, summer and println
+- the transducers are implementing two arities, next and complete. the arities are implemented with overloading.
 
-Examples
-=======
+Usage examples
+==============
 
 Functional style. As shown in Rich Hickey's talk.
 ```C++
