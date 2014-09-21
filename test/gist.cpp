@@ -3,6 +3,8 @@
 #include <array>
 #include <sstream>
 #include <memory>
+#include <algorithm>
+#include <numeric>
 #include <cassert>
 
 template<class Next, class Complete>
@@ -195,12 +197,27 @@ auto even = [](auto v){return v % 2 == 0;};
 
 auto inc = [](auto v){return ++v;};
 
+template<class InputIterator, class OutputIterator, class UnaryFunction>
+OutputIterator acc_transform(
+  InputIterator first1,
+  InputIterator last1,
+  OutputIterator result,
+  UnaryFunction func){
+    return std::accumulate(first1, last1, result, [=](auto result, auto v){*result = func(v); return ++result;});
+}
+
 int main() {
 
     long actual;
     const long required = 8;
 
     auto source = std::array<int, 4>({1,2,3,4});
+
+    auto out = std::vector<long>();
+    acc_transform(std::begin(source), std::end(source), std::back_inserter(out), [](auto v){return v + 1;});
+    for(auto v : out) {
+        std::cout << v << std::endl;
+    }
 
     auto sum_of_inc_even = ducer<>().
         filter(even).
