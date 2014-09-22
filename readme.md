@@ -26,6 +26,31 @@ Status
 - filterer, mapper, summer and println
 - the transducers are implementing two arities, next and complete. the arities are implemented with overloading.
 
+ToDo
+====
+- add early-termination
+- show merge, concat and map+merge
+
+Builds
+======
+
+XCode
+-----
+```
+mkdir projects/build
+cd projects/build
+cmake -G"Xcode" ../CMake -B.
+```
+
+OSX
+---
+```
+mkdir projects/build
+cd projects/build
+cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=RelWithDebInfo -B. ../CMake
+make
+```
+
 Usage examples
 ==============
 
