@@ -43,7 +43,7 @@ enable_testing()
 add_test(NAME RunTests COMMAND ducer_test)
 
 add_test(NAME ListTests COMMAND ducer_test --list-tests)
-set_tests_properties(ListTests PROPERTIES PASS_REGULAR_EXPRESSION "[0-9]+ test cases")
+set_tests_properties(ListTests PROPERTIES PASS_REGULAR_EXPRESSION "[0-9]+ test case")
 
 add_test(NAME ListTags COMMAND ducer_test --list-tags)
 set_tests_properties(ListTags PROPERTIES PASS_REGULAR_EXPRESSION "[0-9]+ tags")

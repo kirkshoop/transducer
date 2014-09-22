@@ -28,7 +28,7 @@ struct into_next
     }
 };
 
-auto into = [=](auto ducer, auto out, auto in){
+auto into = [](auto ducer, auto out, auto in){
     return transduce(
         ducer,
         stateless(
