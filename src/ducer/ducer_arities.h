@@ -33,7 +33,7 @@ struct stateful_s
 
     // complete
     template<class Acc>
-    Acc operator()(Acc acc) const { return complete(acc, *state);}
+    auto operator()(Acc acc) const { return complete(acc, *state);}
     // next
     template<class Acc, class T>
     Acc operator()(Acc acc, T v) const { return next(acc, *state, v);}

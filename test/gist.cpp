@@ -39,7 +39,7 @@ struct stateful_s
 
     // complete
     template<class Acc>
-    Acc operator()(Acc acc) const { return complete(acc, *state);}
+    auto operator()(Acc acc) const { return complete(acc, *state);}
     // next
     template<class Acc, class T>
     Acc operator()(Acc acc, T v) const { return next(acc, *state, v);}
@@ -86,14 +86,14 @@ auto summer = [](){
 
 auto println = [](auto& stream){
     auto pointer = std::addressof(stream);
-    typedef decltype(pointer) Pointer;
     return [=](auto step) {
+        typedef decltype(pointer) Pointer;
         return stateful(
             pointer,
             [=](auto s, Pointer stream, auto v){
                 *stream << v << std::endl; return step(s, v);
             },
-            [=](auto s, Pointer stream){return s;});
+            [=](auto s, Pointer){return s;});
     };
 };
 
@@ -208,7 +208,6 @@ OutputIterator acc_transform(
 
 int main() {
 
-    long actual;
     const long required = 8;
 
     auto source = std::array<int, 4>({1,2,3,4});
@@ -234,7 +233,7 @@ int main() {
     }
 
     {
-        actual = into(
+        auto actual = into(
             compose(
                 filterer(even),
                 mapper(inc),
@@ -246,14 +245,14 @@ int main() {
     }
 
     {
-        actual = sum_of_inc_even.
+        auto actual = sum_of_inc_even.
             println(std::cout).
             into(0L, source);
         assert(actual == required);
     }
 
     {
-        actual = into(
+        auto actual = into(
             compose(
                 sum_of_inc_even,
                 println(std::cout)),
@@ -266,9 +265,9 @@ int main() {
         auto ss = std::stringstream();
         std::cout << sum_of_inc_even.
             into(std::addressof(ss), source)->str();
-        auto actual = ss.str();
-        auto required = std::string("8\n");
-        assert(actual == required);
+        auto sactual = ss.str();
+        auto srequired = std::string("8\n");
+        assert(sactual == srequired);
     }
 
 }
